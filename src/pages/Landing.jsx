@@ -23,57 +23,125 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-white">
       {/* Navbar */}
-      <nav className="flex items-center justify-between px-6 py-4 border-b">
-        <span className="text-2xl font-bold text-primary">TrustLink</span>
-        <div className="flex gap-3">
-          <button onClick={() => navigate("/login")} className="px-4 py-2 border border-primary text-primary rounded-lg text-sm font-medium hover:bg-blue-50">
+      <nav className="flex items-center justify-between px-6 py-4 border-b sticky top-0 bg-white z-50">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+            <span className="text-white font-bold text-sm">T</span>
+          </div>
+          <span className="text-2xl font-bold text-primary">TrustLink</span>
+        </div>
+        <div className="flex items-center gap-4">
+          <span onClick={() => navigate("/pricing")} className="text-sm text-gray-600 hover:text-primary cursor-pointer font-medium">
+            Tarifs
+          </span>
+          <button onClick={() => navigate("/login")} className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-primary transition">
             Connexion
           </button>
-          <button onClick={() => navigate("/register")} className="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-blue-700">
+          <button onClick={() => navigate("/register")} className="px-5 py-2 bg-primary text-white rounded-full text-sm font-medium hover:bg-blue-700 transition">
             Inscription
           </button>
-          <span onClick={() => navigate("/pricing")} className="text-sm text-gray-600 hover:text-primary cursor-pointer">
-  Tarifs
-</span>
         </div>
       </nav>
 
-     {/* Hero */}
-<div className="relative bg-gradient-to-br from-blue-50 to-white px-6 py-16 text-center overflow-hidden">
-  
-  {/* Background artisan images */}
-  <div className="absolute inset-0 opacity-10">
-    <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=300" 
-      className="absolute top-0 left-0 w-48 h-48 object-cover rounded-2xl rotate-[-8deg] -translate-x-8 -translate-y-4" alt="" />
-    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300" 
-      className="absolute top-0 right-0 w-48 h-48 object-cover rounded-2xl rotate-[8deg] translate-x-8 -translate-y-4" alt="" />
-    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=300" 
-      className="absolute bottom-0 left-10 w-40 h-40 object-cover rounded-2xl rotate-[-5deg]" alt="" />
-    <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=300" 
-      className="absolute bottom-0 right-10 w-40 h-40 object-cover rounded-2xl rotate-[5deg]" alt="" />
-    <img src="https://images.unsplash.com/photo-1607400201515-c2c41c07d307?w=300" 
-      className="absolute top-1/2 left-4 w-32 h-32 object-cover rounded-2xl rotate-[-3deg] -translate-y-1/2" alt="" />
-    <img src="https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=300" 
-      className="absolute top-1/2 right-4 w-32 h-32 object-cover rounded-2xl rotate-[3deg] -translate-y-1/2" alt="" />
-  </div>
+      {/* Hero */}
+      <section className="px-6 py-16 lg:py-24">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-5 gap-12 lg:gap-16 items-center">
 
-  {/* Content */}
-  <div className="relative z-10">
-    <h1 className="text-4xl font-bold text-gray-900 mb-4">
-      Trouvez un artisan de confiance<br />
-      <span className="text-primary">au Maroc</span>
-    </h1>
-    <p className="text-gray-500 mb-8 text-lg">Artisans vérifiés, notés et disponibles près de chez vous</p>
-    <div className="flex flex-col sm:flex-row gap-3 justify-center">
-      <button onClick={() => navigate("/login")} className="px-8 py-3 bg-primary text-white rounded-xl font-semibold hover:bg-blue-700">
-        Je cherche un artisan
-      </button>
-      <button onClick={() => navigate("/login")} className="px-8 py-3 border-2 border-primary text-primary rounded-xl font-semibold hover:bg-blue-50">
-        Je suis artisan
-      </button>
-    </div>
-  </div>
-</div>
+          {/* Left — 60% */}
+          <div className="lg:col-span-3 space-y-8">
+            <div className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-4 py-2 text-sm font-medium text-primary">
+              🇲🇦 Plateforme #1 des artisans au Maroc
+            </div>
+            <h1 className="text-4xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight text-gray-900 leading-tight">
+              Trouvez un artisan de{" "}
+              <span className="text-primary">confiance</span>{" "}
+              au Maroc
+            </h1>
+            <p className="text-lg text-gray-500 max-w-lg leading-relaxed">
+              Artisans vérifiés, notés et disponibles près de chez vous.
+              Décrivez votre besoin et recevez des devis en quelques minutes.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <button onClick={() => navigate("/login")}
+                className="flex items-center gap-2 px-8 py-4 bg-primary text-white rounded-full font-bold text-base hover:bg-blue-700 shadow-lg shadow-blue-200 transition">
+                Je cherche un artisan <span>→</span>
+              </button>
+              <button onClick={() => navigate("/register")}
+                className="px-8 py-4 border-2 border-accent text-accent rounded-full font-bold text-base hover:bg-orange-50 transition">
+                Je suis artisan
+              </button>
+            </div>
+            <div className="flex flex-wrap gap-6 pt-2">
+              {["Gratuit pour les clients", "Artisans vérifiés", "Réponse en 1h"].map((item) => (
+                <div key={item} className="flex items-center gap-2 text-sm text-gray-500">
+                  <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center">
+                    <span className="text-green-600 text-xs">✓</span>
+                  </div>
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right — 40% */}
+          <div className="lg:col-span-2 relative flex justify-center">
+            <div className="relative w-full max-w-sm">
+
+              {/* Card 1 */}
+              <div className="relative z-30 bg-white rounded-xl shadow-lg border p-4 animate-float">
+                <div className="flex items-start gap-3">
+                  <div className="w-11 h-11 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg">H</div>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className="font-semibold text-gray-900 text-sm">Hassan Benali</h3>
+                      <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-blue-50 text-primary whitespace-nowrap">Vérifié ✓</span>
+                    </div>
+                    <p className="text-sm text-gray-500 mt-0.5">Plombier ⭐ 4.8</p>
+                    <p className="text-xs text-gray-400">Casablanca</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 2 */}
+              <div className="relative z-20 -mt-4 ml-6 bg-white rounded-xl shadow-lg border p-4 animate-float-slow">
+                <div className="flex items-start gap-3">
+                  <div className="w-11 h-11 rounded-full bg-accent flex items-center justify-center text-white font-bold text-lg">F</div>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className="font-semibold text-gray-900 text-sm">Fatima Zahra</h3>
+                      <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-700 whitespace-nowrap">Top 🏆</span>
+                    </div>
+                    <p className="text-sm text-gray-500 mt-0.5">Peintre ⭐ 4.9</p>
+                    <p className="text-xs text-gray-400">Rabat</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 3 */}
+              <div className="relative z-10 -mt-4 -ml-2 bg-white rounded-xl shadow-lg border p-4 animate-float-slower">
+                <div className="flex items-start gap-3">
+                  <div className="w-11 h-11 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-lg">Y</div>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className="font-semibold text-gray-900 text-sm">Youssef Alami</h3>
+                      <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-blue-50 text-primary whitespace-nowrap">Vérifié ✓</span>
+                    </div>
+                    <p className="text-sm text-gray-500 mt-0.5">Électricien ⭐ 4.6</p>
+                    <p className="text-xs text-gray-400">Tanger</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating badge */}
+              <div className="absolute -bottom-4 -right-4 z-40 bg-white rounded-full shadow-lg border px-4 py-2 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span className="text-xs font-semibold text-gray-700 whitespace-nowrap">127 missions ce mois</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Stats */}
       <div className="bg-primary text-white px-6 py-6">
         <div className="flex flex-wrap justify-center gap-8 text-center">
@@ -101,7 +169,7 @@ export default function Landing() {
         <h2 className="text-2xl font-bold text-center text-gray-900 mb-8">Artisans en vedette</h2>
         <div className="flex flex-col sm:flex-row gap-4 max-w-3xl mx-auto">
           {artisans.map((a) => (
-            <div key={a.name} className="flex-1 bg-white rounded-xl border p-5 text-center shadow-sm">
+            <div key={a.name} onClick={() => navigate("/artisan/1")} className="flex-1 bg-white rounded-xl border p-5 text-center shadow-sm hover:border-primary cursor-pointer transition">
               <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-2xl font-bold text-primary mx-auto mb-3">
                 {a.name[0]}
               </div>
