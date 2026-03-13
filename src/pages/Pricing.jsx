@@ -1,4 +1,6 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import { CheckCircle2, ArrowLeft } from "lucide-react";
 
 const plans = [
   {
@@ -7,31 +9,33 @@ const plans = [
     commission: 15,
     color: "border-gray-200",
     badge: null,
+    icon: "🆓",
     features: [
       "Max 20 offres / mois",
-      "Commission 15% par offre acceptée",
+      "Commission 15% par offre",
       "Profil standard",
-      "Placement standard dans les résultats",
-      "Solde minimum: 300 MAD",
+      "Placement standard",
+      "Solde min: 300 MAD",
     ],
     cta: "Commencer gratuitement",
-    ctaStyle: "border border-primary text-primary hover:bg-blue-50",
+    ctaStyle: "border-2 border-blue-600 text-blue-600 hover:bg-blue-50",
   },
   {
     name: "Pro",
     price: 200,
     commission: 10,
-    color: "border-primary",
+    color: "border-blue-600",
     badge: "Le plus populaire",
+    icon: "⚡",
     features: [
       "Offres illimitées",
-      "Commission 10% par offre acceptée",
+      "Commission 10% par offre",
       "Badge 'Pro' sur le profil",
-      "Priorité dans les résultats de recherche",
-      "Solde minimum: 200 MAD",
+      "Priorité dans les résultats",
+      "Solde min: 200 MAD",
     ],
     cta: "Passer en Pro",
-    ctaStyle: "bg-primary text-white hover:bg-blue-700",
+    ctaStyle: "bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-100",
   },
   {
     name: "Elite",
@@ -39,17 +43,18 @@ const plans = [
     commission: 7,
     color: "border-yellow-400",
     badge: "Meilleur retour",
+    icon: "⭐",
     features: [
       "Offres illimitées",
-      "Commission 7% par offre acceptée",
-      "Badge 'Elite ⭐' sur le profil",
-      "Featured placement (top des résultats)",
+      "Commission 7% par offre",
+      "Badge 'Elite ⭐'",
+      "Top des résultats",
       "Support dédié 24h/24",
-      "Analytics — stats de votre profil",
-      "Solde minimum: 100 MAD",
+      "Analytics complets",
+      "Solde min: 100 MAD",
     ],
     cta: "Passer en Elite",
-    ctaStyle: "bg-yellow-400 text-yellow-900 hover:bg-yellow-500",
+    ctaStyle: "bg-yellow-400 text-yellow-900 hover:bg-yellow-500 shadow-lg shadow-yellow-100",
   },
 ];
 
@@ -57,76 +62,73 @@ export default function Pricing() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navbar */}
-      <nav className="bg-white border-b px-6 py-4 flex items-center justify-between">
-        <span onClick={() => navigate("/")} className="text-xl font-bold text-primary cursor-pointer">TrustLink</span>
-        <button onClick={() => navigate("/login")} className="text-sm text-primary font-medium hover:underline">
-          Connexion →
+    <div className="min-h-screen bg-gray-50 pb-20">
+      {/* Navbar Responsive */}
+      <nav className="bg-white border-b px-4 md:px-6 py-4 flex items-center justify-between sticky top-0 z-50">
+        <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/")}>
+           <ArrowLeft size={20} className="md:hidden text-gray-600" />
+           <span className="text-xl font-bold text-blue-600">TrustLink</span>
+        </div>
+        <button onClick={() => navigate("/login")} className="text-sm text-blue-600 font-bold hover:underline">
+          Connexion
         </button>
       </nav>
 
-      <div className="max-w-5xl mx-auto px-4 py-12">
+      <div className="max-w-6xl mx-auto px-4 py-8 md:py-16">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-3">
-            Choisissez votre abonnement
+        <div className="text-center mb-10 md:mb-16">
+          <h1 className="text-3xl md:text-5xl font-black text-gray-900 mb-4">
+            Boostez votre <span className="text-blue-600">activité</span>
           </h1>
-          <p className="text-gray-500 text-lg">
-            Plus vous investissez, moins vous payez de commission
+          <p className="text-gray-500 text-base md:text-lg max-w-2xl mx-auto">
+            Plus vous investissez dans votre visibilité, moins vous payez de commission sur vos travaux.
           </p>
         </div>
 
-        {/* Plans */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Grille des Plans : 1 colonne sur mobile, 3 sur Desktop */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
           {plans.map((plan) => (
             <div
               key={plan.name}
-              className={`bg-white rounded-2xl border-2 ${plan.color} p-6 relative flex flex-col`}
+              className={`bg-white rounded-3xl border-2 ${plan.color} p-6 md:p-8 relative flex flex-col transition-transform hover:scale-[1.02] shadow-sm`}
             >
-              {/* Badge */}
               {plan.badge && (
-                <div className={`absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-bold px-4 py-1 rounded-full whitespace-nowrap ${
-                  plan.name === "Pro" ? "bg-primary text-white" : "bg-yellow-400 text-yellow-900"
+                <div className={`absolute -top-4 left-1/2 -translate-x-1/2 text-[10px] md:text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap ${
+                  plan.name === "Pro" ? "bg-blue-600 text-white" : "bg-yellow-400 text-yellow-900"
                 }`}>
                   {plan.badge}
                 </div>
               )}
 
-              {/* Plan name */}
-              <div className="text-center mb-6">
-                <div className="text-2xl font-bold text-gray-900 mb-1">
-                  {plan.name === "Free" && "🆓"}
-                  {plan.name === "Pro" && "⚡"}
-                  {plan.name === "Elite" && "⭐"}
-                  {" "}{plan.name}
+              <div className="text-center mb-8">
+                <div className="text-4xl mb-2">{plan.icon}</div>
+                <h3 className="text-2xl font-black text-gray-900">{plan.name}</h3>
+                <div className="flex items-baseline justify-center gap-1 mt-4">
+                  <span className="text-4xl font-black text-gray-900">
+                    {plan.price === 0 ? "0" : plan.price}
+                  </span>
+                  <span className="text-gray-500 font-bold text-lg">MAD{plan.price > 0 && "/mois"}</span>
                 </div>
-                <div className="text-4xl font-bold text-gray-900 mt-3">
-                  {plan.price === 0 ? "Gratuit" : `${plan.price} MAD`}
-                </div>
-                {plan.price > 0 && <div className="text-gray-400 text-sm">/ mois</div>}
-                <div className={`mt-2 text-sm font-semibold ${
-                  plan.commission === 15 ? "text-red-500" :
-                  plan.commission === 10 ? "text-primary" : "text-green-600"
+                <div className={`mt-4 inline-block px-3 py-1 rounded-lg text-sm font-bold ${
+                  plan.commission === 15 ? "bg-red-50 text-red-600" :
+                  plan.commission === 10 ? "bg-blue-50 text-blue-600" : "bg-green-50 text-green-600"
                 }`}>
-                  Commission: {plan.commission}%
+                  Commission : {plan.commission}%
                 </div>
               </div>
 
-              {/* Features */}
-              <ul className="space-y-3 flex-1 mb-6">
+              <ul className="space-y-4 mb-8 flex-1">
                 {plan.features.map((f, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
-                    <span className="text-green-500 mt-0.5 flex-shrink-0">✓</span>
+                  <li key={i} className="flex items-center gap-3 text-sm md:text-base text-gray-600 font-medium">
+                    <CheckCircle2 size={18} className="text-green-500 flex-shrink-0" />
                     {f}
                   </li>
                 ))}
               </ul>
 
-              {/* CTA */}
               <button
                 onClick={() => navigate("/register")}
-                className={`w-full py-3 rounded-xl font-semibold text-sm transition ${plan.ctaStyle}`}
+                className={`w-full py-4 rounded-2xl font-black text-base transition-all active:scale-95 ${plan.ctaStyle}`}
               >
                 {plan.cta}
               </button>
@@ -134,44 +136,41 @@ export default function Pricing() {
           ))}
         </div>
 
-        {/* Commission example */}
-        <div className="mt-12 bg-white rounded-2xl border p-6">
-          <h2 className="font-bold text-gray-900 text-lg mb-4 text-center">
-            Exemple concret — Mission de 1 000 MAD
+        {/* Exemple Concret : Adapté pour Mobile */}
+        <div className="mt-16 bg-white rounded-3xl border border-gray-100 p-6 md:p-10 shadow-sm">
+          <h2 className="font-black text-gray-900 text-xl md:text-2xl mb-8 text-center">
+            Combien allez-vous gagner ?
           </h2>
-          <div className="grid grid-cols-3 gap-4 text-center">
+          <p className="text-center text-gray-500 mb-8 text-sm md:text-base">
+            Exemple pour une mission de <strong>1 000 MAD</strong>
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
             {plans.map((plan) => {
               const commission = Math.round(1000 * plan.commission / 100);
-              const gain = 1000 - commission - plan.price;
+              const gain = 1000 - commission;
               return (
-                <div key={plan.name} className={`rounded-xl p-4 border-2 ${plan.color}`}>
-                  <div className="font-bold text-gray-900 mb-3">{plan.name}</div>
-                  <div className="space-y-1 text-sm">
+                <div key={plan.name} className={`rounded-2xl p-5 border-2 ${plan.color} bg-gray-50/30`}>
+                  <div className="font-black text-gray-900 text-lg mb-4 flex items-center justify-between">
+                    {plan.name}
+                    <span className="text-xs font-bold text-gray-400">Total</span>
+                  </div>
+                  <div className="space-y-3 text-sm font-medium">
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Mission</span>
-                      <span className="font-medium">1 000 MAD</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-500">Abonnement</span>
-                      <span className="text-red-500">-{plan.price} MAD</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-500">Commission</span>
+                      <span className="text-gray-500">Commission ({plan.commission}%)</span>
                       <span className="text-red-500">-{commission} MAD</span>
                     </div>
-                    <div className="border-t pt-1 flex justify-between font-bold">
-                      <span>Vous gagnez</span>
-                      <span className={gain > 800 ? "text-green-600" : gain > 700 ? "text-primary" : "text-gray-700"}>
-                        {gain} MAD
-                      </span>
+                    <div className="border-t border-dashed pt-3 flex justify-between font-black text-base">
+                      <span>Gain net</span>
+                      <span className="text-green-600">{gain} MAD</span>
                     </div>
                   </div>
                 </div>
               );
             })}
           </div>
-          <p className="text-xs text-gray-400 text-center mt-4">
-            * Le paiement de la mission reste direct entre client et artisan (cash, virement, mobile money)
+          <p className="text-[10px] md:text-xs text-gray-400 text-center mt-8 italic leading-relaxed">
+            * Note : TrustLink ne prélève la commission que lorsque vous encaissez votre argent. Le paiement se fait directement entre vous et le client.
           </p>
         </div>
       </div>
