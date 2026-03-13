@@ -74,7 +74,7 @@ export default function Login() {
         <div className="text-center mt-4 text-sm text-gray-500">
           Pas encore de compte ?{" "}
           <span onClick={() => navigate("/register?role=artisan")} className="text-primary font-medium cursor-pointer hover:underline">
-  S'inscrire comme artisan
+  S'inscrire 
 </span>
           {" · "}
           <span onClick={() => navigate("/")} className="text-gray-400 cursor-pointer hover:underline">

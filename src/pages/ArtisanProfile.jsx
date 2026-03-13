@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const artisan = {
   name: "Hassan Benali",
@@ -39,6 +40,7 @@ function Stars({ rating }) {
 
 export default function ArtisanProfile() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [showContact, setShowContact] = useState(false);
 
   return (
@@ -142,46 +144,48 @@ export default function ArtisanProfile() {
           </div>
         </div>
 
-        {/* Forfait */}
-        <div className="bg-white rounded-2xl border p-6">
-          <h2 className="font-bold text-gray-900 mb-1">Mon abonnement</h2>
-          <p className="text-sm text-gray-500 mb-4">Passez à un forfait supérieur pour booster votre visibilité</p>
-          <div className="space-y-3">
-            <div className="border-2 border-gray-100 rounded-xl p-4 flex items-center justify-between">
-              <div>
-                <div className="font-semibold text-gray-700 text-sm">🆓 Free</div>
-                <div className="text-xs text-gray-400 mt-0.5">Commission 15% · 20 offres/mois</div>
+        {/* Forfait — visible ghi l artisan */}
+        {user?.role === "artisan" && (
+          <div className="bg-white rounded-2xl border p-6">
+            <h2 className="font-bold text-gray-900 mb-1">Mon abonnement</h2>
+            <p className="text-sm text-gray-500 mb-4">Passez à un forfait supérieur pour booster votre visibilité</p>
+            <div className="space-y-3">
+              <div className="border-2 border-gray-100 rounded-xl p-4 flex items-center justify-between">
+                <div>
+                  <div className="font-semibold text-gray-700 text-sm">🆓 Free</div>
+                  <div className="text-xs text-gray-400 mt-0.5">Commission 15% · 20 offres/mois</div>
+                </div>
+                <span className="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded-full font-medium">Actuel</span>
               </div>
-              <span className="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded-full font-medium">Actuel</span>
-            </div>
-            <div className="border-2 border-primary rounded-xl p-4 flex items-center justify-between bg-blue-50">
-              <div>
-                <div className="font-semibold text-primary text-sm">⚡ Pro — 200 MAD/mois</div>
-                <div className="text-xs text-primary/70 mt-0.5">Commission 10% · Offres illimitées · Badge Pro</div>
+              <div className="border-2 border-primary rounded-xl p-4 flex items-center justify-between bg-blue-50">
+                <div>
+                  <div className="font-semibold text-primary text-sm">⚡ Pro — 200 MAD/mois</div>
+                  <div className="text-xs text-primary/70 mt-0.5">Commission 10% · Offres illimitées · Badge Pro</div>
+                </div>
+                <button onClick={() => navigate("/pricing")}
+                  className="text-xs bg-primary text-white px-3 py-1.5 rounded-xl font-semibold hover:bg-blue-700 transition">
+                  Choisir
+                </button>
               </div>
-              <button onClick={() => navigate("/pricing")}
-                className="text-xs bg-primary text-white px-3 py-1.5 rounded-xl font-semibold hover:bg-blue-700 transition">
-                Choisir
-              </button>
-            </div>
-            <div className="border-2 border-yellow-300 rounded-xl p-4 flex items-center justify-between bg-yellow-50">
-              <div>
-                <div className="font-semibold text-yellow-700 text-sm">⭐ Elite — 400 MAD/mois</div>
-                <div className="text-xs text-yellow-600/80 mt-0.5">Commission 7% · Featured · Analytics</div>
+              <div className="border-2 border-yellow-300 rounded-xl p-4 flex items-center justify-between bg-yellow-50">
+                <div>
+                  <div className="font-semibold text-yellow-700 text-sm">⭐ Elite — 400 MAD/mois</div>
+                  <div className="text-xs text-yellow-600/80 mt-0.5">Commission 7% · Featured · Analytics</div>
+                </div>
+                <button onClick={() => navigate("/pricing")}
+                  className="text-xs bg-yellow-400 text-yellow-900 px-3 py-1.5 rounded-xl font-semibold hover:bg-yellow-500 transition">
+                  Choisir
+                </button>
               </div>
-              <button onClick={() => navigate("/pricing")}
-                className="text-xs bg-yellow-400 text-yellow-900 px-3 py-1.5 rounded-xl font-semibold hover:bg-yellow-500 transition">
-                Choisir
-              </button>
             </div>
+            <p className="text-xs text-center text-gray-400 mt-4">
+              Voir le détail complet →{" "}
+              <span onClick={() => navigate("/pricing")} className="text-primary cursor-pointer hover:underline font-medium">
+                Page Tarifs
+              </span>
+            </p>
           </div>
-          <p className="text-xs text-center text-gray-400 mt-4">
-            Voir le détail complet →{" "}
-            <span onClick={() => navigate("/pricing")} className="text-primary cursor-pointer hover:underline font-medium">
-              Page Tarifs
-            </span>
-          </p>
-        </div>
+        )}
 
       </div>
     </div>
