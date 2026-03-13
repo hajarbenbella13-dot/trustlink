@@ -69,10 +69,16 @@ export default function CraftsmanFeed() {
           >
             💰 {balance} MAD
           </div>
+          <div
+            onClick={() => navigate("/artisan/1")}
+            className="flex items-center gap-1 bg-blue-50 border border-blue-200 text-primary px-3 py-1.5 rounded-xl text-sm font-semibold cursor-pointer hover:bg-blue-100"
+          >
+            👤 Mon profil
+          </div>
           <div className="relative cursor-pointer" onClick={() => navigate("/notifications")}>
-  <span className="text-xl">🔔</span>
-  <span className="absolute -top-1 -right-1 bg-accent text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">3</span>
-</div>
+            <span className="text-xl">🔔</span>
+            <span className="absolute -top-1 -right-1 bg-accent text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">3</span>
+          </div>
           <div
             className="w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm cursor-pointer"
             onClick={logout}

@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const cities = ["Casablanca", "Rabat", "Marrakech", "Fès", "Tanger"];
 const categories = ["Plomberie", "Électricité", "Peinture", "Carrelage", "Menuiserie", "Climatisation", "Serrurerie", "Maçonnerie"];
 
 export default function Register() {
   const navigate = useNavigate();
-  const [tab, setTab] = useState("client");
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const [tab, setTab] = useState(params.get("role") === "artisan" ? "artisan" : "client");
   const [step, setStep] = useState(1);
   const [form, setForm] = useState({
     name: "", phone: "", city: "", password: "",
@@ -15,7 +17,6 @@ export default function Register() {
   });
 
   const set = (k, v) => setForm({ ...form, [k]: v });
-
   const totalSteps = tab === "client" ? 2 : 4;
 
   return (
@@ -30,16 +31,12 @@ export default function Register() {
         {/* Tabs */}
         {step === 1 && (
           <div className="flex bg-gray-100 rounded-xl p-1 mb-6">
-            <button
-              onClick={() => setTab("client")}
-              className={`flex-1 py-2 rounded-lg text-sm font-medium transition ${tab === "client" ? "bg-white text-primary shadow-sm" : "text-gray-500"}`}
-            >
+            <button onClick={() => setTab("client")}
+              className={`flex-1 py-2 rounded-lg text-sm font-medium transition ${tab === "client" ? "bg-white text-primary shadow-sm" : "text-gray-500"}`}>
               👤 Je suis client
             </button>
-            <button
-              onClick={() => setTab("artisan")}
-              className={`flex-1 py-2 rounded-lg text-sm font-medium transition ${tab === "artisan" ? "bg-white text-primary shadow-sm" : "text-gray-500"}`}
-            >
+            <button onClick={() => setTab("artisan")}
+              className={`flex-1 py-2 rounded-lg text-sm font-medium transition ${tab === "artisan" ? "bg-white text-primary shadow-sm" : "text-gray-500"}`}>
               🔧 Je suis artisan
             </button>
           </div>
@@ -48,121 +45,81 @@ export default function Register() {
         {/* Progress bar */}
         <div className="flex gap-2 mb-6">
           {Array.from({ length: totalSteps }).map((_, i) => (
-            <div
-              key={i}
-              className={`h-1.5 flex-1 rounded-full transition ${i < step ? "bg-primary" : "bg-gray-200"}`}
-            />
+            <div key={i} className={`h-1.5 flex-1 rounded-full transition ${i < step ? "bg-primary" : "bg-gray-200"}`} />
           ))}
         </div>
 
-        {/* STEP 1 — Infos de base */}
+        {/* STEP 1 */}
         {step === 1 && (
           <div className="space-y-4">
             <h2 className="font-bold text-gray-900 text-lg">Informations de base</h2>
             <div>
               <label className="text-sm font-medium text-gray-700 block mb-1">Nom complet</label>
-              <input
-                placeholder="Ex: Hassan Benali"
-                value={form.name}
-                onChange={(e) => set("name", e.target.value)}
-                className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"
-              />
+              <input placeholder="Ex: Hassan Benali" value={form.name} onChange={(e) => set("name", e.target.value)}
+                className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary" />
             </div>
             <div>
               <label className="text-sm font-medium text-gray-700 block mb-1">Téléphone</label>
-              <input
-                placeholder="06XXXXXXXX"
-                value={form.phone}
-                onChange={(e) => set("phone", e.target.value)}
-                className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"
-              />
+              <input placeholder="06XXXXXXXX" value={form.phone} onChange={(e) => set("phone", e.target.value)}
+                className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary" />
             </div>
             <div>
               <label className="text-sm font-medium text-gray-700 block mb-1">Ville</label>
-              <select
-                value={form.city}
-                onChange={(e) => set("city", e.target.value)}
-                className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"
-              >
+              <select value={form.city} onChange={(e) => set("city", e.target.value)}
+                className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary">
                 <option value="">Choisir une ville</option>
                 {cities.map((c) => <option key={c}>{c}</option>)}
               </select>
             </div>
             <div>
               <label className="text-sm font-medium text-gray-700 block mb-1">Mot de passe</label>
-              <input
-                type="password"
-                placeholder="••••••••"
-                value={form.password}
-                onChange={(e) => set("password", e.target.value)}
-                className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"
-              />
+              <input type="password" placeholder="••••••••" value={form.password} onChange={(e) => set("password", e.target.value)}
+                className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary" />
             </div>
             {tab === "artisan" && (
               <>
                 <div>
                   <label className="text-sm font-medium text-gray-700 block mb-1">Métier</label>
-                  <select
-                    value={form.job}
-                    onChange={(e) => set("job", e.target.value)}
-                    className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"
-                  >
+                  <select value={form.job} onChange={(e) => set("job", e.target.value)}
+                    className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary">
                     <option value="">Choisir un métier</option>
                     {categories.map((c) => <option key={c}>{c}</option>)}
                   </select>
                 </div>
                 <div>
                   <label className="text-sm font-medium text-gray-700 block mb-1">Années d'expérience</label>
-                  <input
-                    type="number"
-                    placeholder="Ex: 5"
-                    value={form.experience}
-                    onChange={(e) => set("experience", e.target.value)}
-                    className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"
-                  />
+                  <input type="number" placeholder="Ex: 5" value={form.experience} onChange={(e) => set("experience", e.target.value)}
+                    className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary" />
                 </div>
               </>
             )}
-            <button
-              onClick={() => setStep(2)}
-              disabled={!form.name || !form.phone || !form.city || !form.password}
-              className="w-full bg-primary text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition disabled:opacity-40"
-            >
+            <button onClick={() => setStep(2)} disabled={!form.name || !form.phone || !form.city || !form.password}
+              className="w-full bg-primary text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition disabled:opacity-40">
               Continuer →
             </button>
           </div>
         )}
 
-        {/* STEP 2 — OTP (client) ola Portfolio (artisan) */}
+        {/* STEP 2 — OTP client */}
         {step === 2 && tab === "client" && (
           <div className="space-y-4">
             <h2 className="font-bold text-gray-900 text-lg">Vérification téléphone</h2>
             <p className="text-sm text-gray-500">Code envoyé au <strong>{form.phone}</strong></p>
             <div>
               <label className="text-sm font-medium text-gray-700 block mb-1">Code OTP (6 chiffres)</label>
-              <input
-                placeholder="XXXXXX"
-                maxLength={6}
-                value={form.otp}
-                onChange={(e) => set("otp", e.target.value)}
-                className="w-full border rounded-xl px-4 py-3 text-sm text-center tracking-widest font-mono focus:outline-none focus:border-primary"
-              />
+              <input placeholder="XXXXXX" maxLength={6} value={form.otp} onChange={(e) => set("otp", e.target.value)}
+                className="w-full border rounded-xl px-4 py-3 text-sm text-center tracking-widest font-mono focus:outline-none focus:border-primary" />
               <p className="text-xs text-gray-400 mt-1 text-center">Pour la démo, n'importe quel code fonctionne</p>
             </div>
-            <button
-              onClick={() => navigate("/client/home")}
-              disabled={form.otp.length < 4}
-              className="w-full bg-primary text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition disabled:opacity-40"
-            >
+            <button onClick={() => navigate("/client/home")} disabled={form.otp.length < 4}
+              className="w-full bg-primary text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition disabled:opacity-40">
               Confirmer et créer mon compte
             </button>
-            <button onClick={() => setStep(1)} className="w-full text-gray-400 text-sm hover:text-gray-600">
-              ← Retour
-            </button>
+            <button onClick={() => setStep(1)} className="w-full text-gray-400 text-sm hover:text-gray-600">← Retour</button>
           </div>
         )}
 
-        {/* STEP 2 — Portfolio (artisan) */}
+        {/* STEP 2 — Portfolio artisan */}
         {step === 2 && tab === "artisan" && (
           <div className="space-y-4">
             <h2 className="font-bold text-gray-900 text-lg">Portfolio de travaux</h2>
@@ -171,11 +128,8 @@ export default function Register() {
               <div className="text-4xl mb-2">📸</div>
               <p className="text-sm text-gray-500">Glissez vos photos ici</p>
               <p className="text-xs text-gray-400 mt-1">JPEG, PNG — max 15MB</p>
-              <button className="mt-3 text-sm text-primary font-medium hover:underline">
-                Ou choisir depuis l'appareil
-              </button>
+              <button className="mt-3 text-sm text-primary font-medium hover:underline">Ou choisir depuis l'appareil</button>
             </div>
-            {/* Mock uploaded photos */}
             <div className="space-y-2">
               {["Pose carrelage salle de bain, 2024", "Réparation fuite cuisine, 2024"].map((t, i) => (
                 <div key={i} className="flex items-center gap-3 bg-gray-50 rounded-xl p-3">
@@ -185,17 +139,14 @@ export default function Register() {
                 </div>
               ))}
             </div>
-            <button
-              onClick={() => setStep(3)}
-              className="w-full bg-primary text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
-            >
+            <button onClick={() => setStep(3)} className="w-full bg-primary text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition">
               Continuer →
             </button>
             <button onClick={() => setStep(1)} className="w-full text-gray-400 text-sm hover:text-gray-600">← Retour</button>
           </div>
         )}
 
-        {/* STEP 3 — Recommandations (artisan) */}
+        {/* STEP 3 — Recommandations */}
         {step === 3 && tab === "artisan" && (
           <div className="space-y-4">
             <h2 className="font-bold text-gray-900 text-lg">Recommandations</h2>
@@ -203,14 +154,8 @@ export default function Register() {
             {[1, 2].map((n) => (
               <div key={n} className="border rounded-xl p-4 space-y-3">
                 <div className="text-sm font-medium text-gray-700">Référence {n}</div>
-                <input
-                  placeholder="Nom complet"
-                  className="w-full border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-primary"
-                />
-                <input
-                  placeholder="Téléphone"
-                  className="w-full border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-primary"
-                />
+                <input placeholder="Nom complet" className="w-full border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-primary" />
+                <input placeholder="Téléphone" className="w-full border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-primary" />
                 <select className="w-full border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-primary">
                   <option>Client</option>
                   <option>Voisin</option>
@@ -219,17 +164,14 @@ export default function Register() {
                 </select>
               </div>
             ))}
-            <button
-              onClick={() => setStep(4)}
-              className="w-full bg-primary text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
-            >
+            <button onClick={() => setStep(4)} className="w-full bg-primary text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition">
               Continuer →
             </button>
             <button onClick={() => setStep(2)} className="w-full text-gray-400 text-sm hover:text-gray-600">← Retour</button>
           </div>
         )}
 
-        {/* STEP 4 — Confirmation (artisan) */}
+        {/* STEP 4 — Confirmation */}
         {step === 4 && tab === "artisan" && (
           <div className="text-center space-y-4">
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center text-4xl mx-auto">✅</div>
@@ -242,10 +184,8 @@ export default function Register() {
               <div className="flex items-center gap-2"><span className="text-yellow-500">⏳</span> Vérification en cours — 24 à 72h</div>
             </div>
             <p className="text-xs text-gray-400">Vous serez notifié par SMS dès l'approbation</p>
-            <button
-              onClick={() => navigate("/craftsman/feed")}
-              className="w-full bg-primary text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
-            >
+            <button onClick={() => navigate("/craftsman/feed")}
+              className="w-full bg-primary text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition">
               Accéder à mon espace →
             </button>
           </div>

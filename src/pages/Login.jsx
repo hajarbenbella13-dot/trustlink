@@ -21,7 +21,7 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
       <div className="bg-white rounded-2xl shadow-sm border p-8 w-full max-w-md">
-        
+
         {/* Logo */}
         <div className="text-center mb-8">
           <span className="text-3xl font-bold text-primary">TrustLink</span>
@@ -73,8 +73,12 @@ export default function Login() {
 
         <div className="text-center mt-4 text-sm text-gray-500">
           Pas encore de compte ?{" "}
-          <span onClick={() => navigate("/")} className="text-primary font-medium cursor-pointer hover:underline">
-            Retour à l'accueil
+          <span onClick={() => navigate("/register?role=artisan")} className="text-primary font-medium cursor-pointer hover:underline">
+  S'inscrire comme artisan
+</span>
+          {" · "}
+          <span onClick={() => navigate("/")} className="text-gray-400 cursor-pointer hover:underline">
+            Accueil
           </span>
         </div>
       </div>
