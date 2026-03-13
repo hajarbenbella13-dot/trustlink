@@ -38,23 +38,42 @@ export default function Landing() {
         </div>
       </nav>
 
-      {/* Hero */}
-      <div className="bg-gradient-to-br from-blue-50 to-white px-6 py-16 text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          Trouvez un artisan de confiance<br />
-          <span className="text-primary">au Maroc</span>
-        </h1>
-        <p className="text-gray-500 mb-8 text-lg">Artisans vérifiés, notés et disponibles près de chez vous</p>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <button onClick={() => navigate("/login")} className="px-8 py-3 bg-primary text-white rounded-xl font-semibold hover:bg-blue-700">
-            Je cherche un artisan
-          </button>
-          <button onClick={() => navigate("/login")} className="px-8 py-3 border-2 border-primary text-primary rounded-xl font-semibold hover:bg-blue-50">
-            Je suis artisan
-          </button>
-        </div>
-      </div>
+     {/* Hero */}
+<div className="relative bg-gradient-to-br from-blue-50 to-white px-6 py-16 text-center overflow-hidden">
+  
+  {/* Background artisan images */}
+  <div className="absolute inset-0 opacity-10">
+    <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=300" 
+      className="absolute top-0 left-0 w-48 h-48 object-cover rounded-2xl rotate-[-8deg] -translate-x-8 -translate-y-4" alt="" />
+    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300" 
+      className="absolute top-0 right-0 w-48 h-48 object-cover rounded-2xl rotate-[8deg] translate-x-8 -translate-y-4" alt="" />
+    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=300" 
+      className="absolute bottom-0 left-10 w-40 h-40 object-cover rounded-2xl rotate-[-5deg]" alt="" />
+    <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=300" 
+      className="absolute bottom-0 right-10 w-40 h-40 object-cover rounded-2xl rotate-[5deg]" alt="" />
+    <img src="https://images.unsplash.com/photo-1607400201515-c2c41c07d307?w=300" 
+      className="absolute top-1/2 left-4 w-32 h-32 object-cover rounded-2xl rotate-[-3deg] -translate-y-1/2" alt="" />
+    <img src="https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=300" 
+      className="absolute top-1/2 right-4 w-32 h-32 object-cover rounded-2xl rotate-[3deg] -translate-y-1/2" alt="" />
+  </div>
 
+  {/* Content */}
+  <div className="relative z-10">
+    <h1 className="text-4xl font-bold text-gray-900 mb-4">
+      Trouvez un artisan de confiance<br />
+      <span className="text-primary">au Maroc</span>
+    </h1>
+    <p className="text-gray-500 mb-8 text-lg">Artisans vérifiés, notés et disponibles près de chez vous</p>
+    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+      <button onClick={() => navigate("/login")} className="px-8 py-3 bg-primary text-white rounded-xl font-semibold hover:bg-blue-700">
+        Je cherche un artisan
+      </button>
+      <button onClick={() => navigate("/login")} className="px-8 py-3 border-2 border-primary text-primary rounded-xl font-semibold hover:bg-blue-50">
+        Je suis artisan
+      </button>
+    </div>
+  </div>
+</div>
       {/* Stats */}
       <div className="bg-primary text-white px-6 py-6">
         <div className="flex flex-wrap justify-center gap-8 text-center">
